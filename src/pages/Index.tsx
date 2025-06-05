@@ -53,33 +53,30 @@ const Index = () => {
 
         <div className={`transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} relative z-10`}>
           <h1 className="text-5xl md:text-7xl font-bold text-[#0A1A3A] mb-8 leading-tight">
-            Μάθε Μαθηματικά με τον{" "}
+            <span className="block">Μάθε Μαθηματικά με τον</span>
             <span className="relative inline-block">
               <span className="bg-gradient-to-r from-blue-600 to-teal-500 bg-clip-text text-transparent transition-all duration-500">
                 {animatedWord}
               </span>
               <span className="absolute bottom-2 left-0 w-full h-1 bg-gradient-to-r from-blue-600 to-teal-500 rounded-full"></span>
             </span>{" "}
-            Τρόπο
+            <span>Τρόπο</span>
           </h1>
           <p className="text-xl md:text-2xl text-slate-600 mb-10 max-w-4xl mx-auto leading-relaxed font-medium">
             Η πρώτη AI πλατφόρμα εξάσκησης για τις Πανελλήνιες. Χωρίς θεωρία – μόνο στοχευμένη πράξη με άμεσο feedback.
           </p>
+          
+          {/* Inline Waitlist Form */}
           <div className="space-y-6">
-            <Button size="lg" className="bg-gradient-to-r from-[#0A1A3A] to-blue-700 hover:from-blue-800 hover:to-blue-900 text-white px-10 py-6 text-xl font-semibold rounded-full transform hover:scale-105 transition-all duration-300 shadow-xl">
-              Μπες στη Λίστα Αναμονής
-            </Button>
+            <div className="max-w-md mx-auto">
+              <script async data-uid="9063eb98de" src="https://maxmath.kit.com/9063eb98de/index.js"></script>
+            </div>
             
             {/* FOMO Element */}
             <div className="inline-flex items-center space-x-2 bg-orange-100 px-4 py-2 rounded-full">
               <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></div>
               <span className="text-orange-700 font-medium">Μόνο 47 θέσεις Early Access απομένουν</span>
             </div>
-          </div>
-          
-          {/* ConvertKit Script */}
-          <div className="mt-12">
-            <script async data-uid="9063eb98de" src="https://maxmath.kit.com/9063eb98de/index.js"></script>
           </div>
         </div>
       </section>
