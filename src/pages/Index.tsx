@@ -28,9 +28,20 @@ const Index = () => {
         </div>
       </header>
 
+      {/* Mission Statement Banner */}
+      <section className="bg-white py-12 border-b border-gray-100">
+        <div className="container mx-auto px-4">
+          <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
+            <p className="text-2xl md:text-3xl font-bold text-gray-900 text-center leading-relaxed max-w-5xl mx-auto">
+              «Η σύγχρονη εκπαίδευση απέτυχε να διδάξει αποτελεσματικά. Εμείς αναλάβαμε να δημιουργήσουμε ένα σύστημα που σου μαθαίνει Μαθηματικά σωστά.»
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-16 text-center">
-        <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <div className={`transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
             Μάθε Μαθηματικά με τον{" "}
             <span className="text-blue-600 bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
