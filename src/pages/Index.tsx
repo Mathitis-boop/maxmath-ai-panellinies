@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Check, Brain, Target, Zap, Users, Star, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -41,21 +40,6 @@ const Index = () => {
           </div>
         </div>
       </header>
-
-      {/* Mission Statement Banner */}
-      <section className="bg-gradient-to-r from-[#0A1A3A] to-blue-800 py-16 relative overflow-hidden">
-        <div className="absolute inset-0 bg-black/10"></div>
-        <div className="container mx-auto px-4 relative z-10">
-          <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
-            <p className="text-2xl md:text-4xl font-bold text-white text-center leading-relaxed max-w-6xl mx-auto">
-              Η σύγχρονη εκπαίδευση απέτυχε να διδάξει αποτελεσματικά.
-            </p>
-            <p className="text-xl md:text-2xl font-semibold text-blue-100 text-center leading-relaxed max-w-5xl mx-auto mt-4">
-              Εμείς αναλάβαμε να δημιουργήσουμε ένα προϊόν που σε μαθαίνει Μαθηματικά σωστά.
-            </p>
-          </div>
-        </div>
-      </section>
 
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-20 text-center relative overflow-hidden">
