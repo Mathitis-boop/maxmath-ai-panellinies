@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Check, Play, Users, Award, Zap, Target, Star, ArrowRight, Brain, TrendingUp, Shield, Clock, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -373,7 +372,7 @@ const Index = () => {
               >
                 <CardContent className="p-8 relative">
                   {/* Animated quote background */}
-                  <div className="absolute top-4 left-4 text-6xl text-gray-100 font-serif opacity-50 group-hover:opacity-70 transition-opacity duration-300">"</div>
+                  <div className="absolute top-4 left-4 text-6xl text-gray-100 font-serif opacity-50 group-hover:opacity-70 transition-opacity duration-300">&quot;</div>
                   
                   <div className="relative">
                     <div className="flex items-center mb-6 space-x-1">
@@ -387,7 +386,7 @@ const Index = () => {
                     </div>
                     
                     <blockquote className="text-gray-700 mb-6 text-lg leading-relaxed italic group-hover:text-gray-800 transition-colors duration-300">
-                      "{testimonial.quote}"
+                      &quot;{testimonial.quote}&quot;
                     </blockquote>
                     
                     <div className="flex items-center">
@@ -487,7 +486,7 @@ const Index = () => {
       <section className="py-20 bg-gradient-to-r from-blue-600 via-purple-600 to-teal-500 relative overflow-hidden">
         {/* Animated background elements */}
         <div className="absolute inset-0">
-          <div className="absolute top-0 left-0 w-full h-full bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.1"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] animate-[drift_20s_ease-in-out_infinite]" />
+          <div className="absolute top-0 left-0 w-full h-full bg-[url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%23ffffff&quot; fill-opacity=&quot;0.1&quot;%3E%3Cpath d=&quot;M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] animate-[drift_20s_ease-in-out_infinite]" />
           <div className="absolute inset-0 bg-gradient-to-r from-black/10 via-transparent to-black/10 animate-[shimmer_4s_ease-in-out_infinite]" />
         </div>
         
