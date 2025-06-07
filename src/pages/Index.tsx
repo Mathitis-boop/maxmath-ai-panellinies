@@ -1,40 +1,28 @@
+
 import { useState, useEffect } from "react";
-import { Check, Brain, Target, Zap, Users, Star, ChevronDown } from "lucide-react";
+import { Check, Play, Users, Award, Zap, Target, Star, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Badge } from "@/components/ui/badge";
 
 const Index = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const [animatedWord, setAnimatedWord] = useState("Έξυπνο");
 
-  // Trigger animation on component mount
   useEffect(() => {
     const timer = setTimeout(() => setIsVisible(true), 100);
     return () => clearTimeout(timer);
   }, []);
 
-  // Animate rotating words in hero
-  useEffect(() => {
-    const words = ["Έξυπνο", "Σωστό", "Γρήγορο", "Εξατομικευμένο"];
-    let index = 0;
-    const interval = setInterval(() => {
-      index = (index + 1) % words.length;
-      setAnimatedWord(words[index]);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+    <div className="min-h-screen bg-white">
       {/* Header */}
-      <header className="bg-white/90 backdrop-blur-sm shadow-sm sticky top-0 z-50 border-b border-slate-200">
-        <div className="container mx-auto px-4 py-4">
+      <header className="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <div className="text-3xl font-bold bg-gradient-to-r from-[#0A1A3A] to-blue-600 bg-clip-text text-transparent">
+            <div className="text-2xl font-bold text-slate-900">
               MaxMath
             </div>
-            <Button variant="outline" className="text-[#0A1A3A] border-[#0A1A3A] hover:bg-[#E3F2FD] font-medium">
+            <Button variant="outline" className="text-slate-700 border-slate-300 hover:bg-slate-50">
               Επικοινωνία
             </Button>
           </div>
@@ -42,214 +30,366 @@ const Index = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-20 text-center relative overflow-hidden">
-        {/* Background Animation */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-20 left-10 text-6xl text-[#0A1A3A] animate-pulse">∫</div>
-          <div className="absolute top-40 right-20 text-4xl text-blue-600 animate-bounce">π</div>
-          <div className="absolute bottom-40 left-20 text-5xl text-[#0A1A3A] animate-pulse">∑</div>
-          <div className="absolute bottom-20 right-10 text-6xl text-blue-600 animate-bounce">∞</div>
-        </div>
+      <section className="bg-white py-20 lg:py-28">
+        <div className="container mx-auto px-6">
+          <div className={`text-center max-w-4xl mx-auto transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            {/* Trust Badge */}
+            <Badge className="bg-green-100 text-green-800 border-green-200 mb-6 px-4 py-2">
+              Εμπιστεύονται ήδη 500+ μαθητές
+            </Badge>
 
-        <div className={`transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} relative z-10`}>
-          <h1 className="text-5xl md:text-7xl font-bold text-[#0A1A3A] mb-8 leading-tight">
-            <span className="block">Μάθε Μαθηματικά με τον</span>
-            <span className="relative inline-block">
-              <span className="bg-gradient-to-r from-blue-600 to-teal-500 bg-clip-text text-transparent transition-all duration-500">
-                {animatedWord}
-              </span>
-              <span className="absolute bottom-2 left-0 w-full h-1 bg-gradient-to-r from-blue-600 to-teal-500 rounded-full"></span>
-            </span>{" "}
-            <span>Τρόπο</span>
-          </h1>
-          <p className="text-xl md:text-2xl text-slate-600 mb-10 max-w-4xl mx-auto leading-relaxed font-medium">
-            Η πρώτη AI πλατφόρμα εξάσκησης για τις Πανελλήνιες. Χωρίς θεωρία – μόνο στοχευμένη πράξη με άμεσο feedback.
-          </p>
-          
-          {/* Inline Waitlist Form */}
-          <div className="space-y-6">
-            <div className="max-w-md mx-auto">
+            <h1 className="text-4xl lg:text-6xl font-bold text-slate-900 mb-6 leading-tight">
+              Ξέχνα τη θεωρία.<br />
+              <span className="text-blue-600">Προπονήσου με ακρίβεια.</span>
+            </h1>
+
+            <p className="text-xl text-slate-600 mb-8 max-w-2xl mx-auto">
+              Η πρώτη AI πλατφόρμα που σε μαθαίνει Μαθηματικά μόνο με εξάσκηση. 
+              Φτιαγμένη για Πανελλήνιες.
+            </p>
+
+            {/* Waitlist Form */}
+            <div className="max-w-md mx-auto mb-8">
               <script async data-uid="9063eb98de" src="https://maxmath.kit.com/9063eb98de/index.js"></script>
             </div>
-            
-            {/* FOMO Element */}
-            <div className="inline-flex items-center space-x-2 bg-orange-100 px-4 py-2 rounded-full">
-              <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></div>
-              <span className="text-orange-700 font-medium">Μόνο 47 θέσεις Early Access απομένουν</span>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      {/* How It Works Section */}
-      <section className="bg-gradient-to-br from-slate-50 to-blue-50 py-20">
-        <div className="container mx-auto px-4">
-          <h2 className="text-4xl md:text-5xl font-bold text-center text-[#0A1A3A] mb-16">Πώς Λειτουργεί</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              { icon: Target, title: "Διαγνωστικό Test", desc: "Μάθε σε 10 λεπτά τι ξέρεις", number: "01" },
-              { icon: Brain, title: "Εξατομικευμένη Διαδρομή", desc: "AI σου δείχνει μόνο τι χρειάζεσαι", number: "02" },
-              { icon: Zap, title: "Πράξη με XP & Επεξήγηση", desc: "Μαθαίνεις με feedback & σύστημα πόντων", number: "03" }
-            ].map((step, index) => (
-              <Card key={index} className="bg-white/70 backdrop-blur-sm hover:shadow-2xl transition-all duration-500 border-0 rounded-2xl overflow-hidden group">
-                <CardContent className="p-8 text-center relative">
-                  <div className="absolute top-4 right-4 text-6xl font-bold text-blue-100 group-hover:text-blue-200 transition-colors">
-                    {step.number}
-                  </div>
-                  <div className="bg-gradient-to-br from-blue-500 to-teal-500 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 transform group-hover:scale-110 transition-transform duration-300">
-                    <step.icon className="text-white" size={36} />
-                  </div>
-                  <h3 className="text-2xl font-bold text-[#0A1A3A] mb-4">{step.title}</h3>
-                  <p className="text-slate-600 text-lg">{step.desc}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Why MaxMath Section */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <h2 className="text-4xl md:text-5xl font-bold text-center text-[#0A1A3A] mb-16">Γιατί MaxMath</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {[
-              { emoji: "🔁", title: "Spaced Repetition", desc: "Επαναλαμβάνεις ό,τι χρειάζεσαι τη σωστή στιγμή" },
-              { emoji: "🧠", title: "Adaptive AI", desc: "Η δυσκολία προσαρμόζεται στο επίπεδό σου" },
-              { emoji: "🚫", title: "Χωρίς άχρηστη θεωρία", desc: "Μαθαίνεις κάνοντας, όχι διαβάζοντας" },
-              { emoji: "🎮", title: "XP System", desc: "Κερδίζεις πόντους και βλέπεις την πρόοδό σου" },
-              { emoji: "✅", title: "Designed για Πανελλήνιες", desc: "Στοχευμένα για επιτυχία στις εξετάσεις" },
-              { emoji: "📈", title: "Μετρήσιμη πρόοδος", desc: "Βλέπεις την πραγματική σου βελτίωση" }
-            ].map((feature, index) => (
-              <div key={index} className="group">
-                <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 border border-slate-100 hover:border-blue-200">
-                  <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">
-                    {feature.emoji}
-                  </div>
-                  <h3 className="font-bold text-[#0A1A3A] text-xl mb-3">{feature.title}</h3>
-                  <p className="text-slate-600">{feature.desc}</p>
-                </div>
+            {/* Trust Indicators */}
+            <div className="flex items-center justify-center space-x-8 text-sm text-slate-500">
+              <div className="flex items-center space-x-1">
+                <Check className="w-4 h-4 text-green-500" />
+                <span>Δωρεάν για Early Access</span>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials Section */}
-      <section className="bg-gradient-to-r from-[#0A1A3A] to-blue-800 py-20">
-        <div className="container mx-auto px-4">
-          <h2 className="text-4xl md:text-5xl font-bold text-center text-white mb-16">Τι Λένε οι Μαθητές</h2>
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {[
-              { name: "Μαρία Κ., Γ' Λυκείου", text: "Μέσα σε 15 λεπτά κατάλαβα Πιθανότητες που δεν καταλάβαινα όλο το χρόνο.", avatar: "M" },
-              { name: "Νίκος Π., Γ' Λυκείου", text: "Ένιωσα για πρώτη φορά ότι προοδεύω στα Μαθηματικά.", avatar: "Ν" }
-            ].map((testimonial, index) => (
-              <Card key={index} className="bg-white/10 backdrop-blur-sm border-white/20">
-                <CardContent className="p-8">
-                  <div className="flex items-center mb-4">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="text-yellow-400 fill-current" size={20} />
-                    ))}
-                  </div>
-                  <p className="text-white mb-6 text-lg italic leading-relaxed">
-                    "{testimonial.text}"
-                  </p>
-                  <div className="flex items-center">
-                    <div className="w-12 h-12 bg-gradient-to-br from-blue-400 to-teal-400 rounded-full flex items-center justify-center text-white font-bold text-lg mr-4">
-                      {testimonial.avatar}
-                    </div>
-                    <p className="font-semibold text-blue-100">{testimonial.name}</p>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Benefits Section */}
-      <section className="py-20 bg-slate-50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-4xl md:text-5xl font-bold text-center text-[#0A1A3A] mb-16">Τι θα κερδίσεις</h2>
-          <div className="max-w-3xl mx-auto">
-            <div className="space-y-6">
-              {[
-                "Πιάνεις υψηλές βαθμολογίες χωρίς να \"λιώνεις\"",
-                "Ξέρεις τι να λύσεις κάθε μέρα",
-                "Διαβάζεις με στόχο και αυτοπεποίθηση"
-              ].map((benefit, index) => (
-                <div key={index} className="flex items-center space-x-4 bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-                  <div className="bg-gradient-to-r from-green-500 to-teal-500 text-white rounded-full p-3 flex-shrink-0">
-                    <Check size={20} />
-                  </div>
-                  <p className="text-lg text-slate-700 font-medium">{benefit}</p>
-                </div>
-              ))}
+              <div className="flex items-center space-x-1">
+                <Check className="w-4 h-4 text-green-500" />
+                <span>Φτιαγμένο στην Ελλάδα</span>
+              </div>
+              <div className="flex items-center space-x-1">
+                <Check className="w-4 h-4 text-green-500" />
+                <span>99% ικανοποίηση</span>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* FAQ Section */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <h2 className="text-4xl md:text-5xl font-bold text-center text-[#0A1A3A] mb-16">Συχνές Ερωτήσεις</h2>
-          <div className="max-w-3xl mx-auto">
-            <Accordion type="single" collapsible className="space-y-4">
-              {[
-                { q: "Είναι δωρεάν;", a: "Ναι, για όσους μπουν πρώτοι στη λίστα αναμονής θα έχουν δωρεάν πρόσβαση στην πλατφόρμα." },
-                { q: "Τι κάνει διαφορετικό το MaxMath;", a: "Το MaxMath χρησιμοποιεί AI για να δημιουργήσει εξατομικευμένη διαδρομή μάθησης. Δεν έχει θεωρία - μόνο στοχευμένη εξάσκηση με άμεσο feedback." },
-                { q: "Θα καταλαβαίνω τις λύσεις;", a: "Απολύτως! Κάθε άσκηση συνοδεύεται από λεπτομερή επεξήγηση και feedback που σε βοηθάει να κατανοήσεις τη λογική." },
-                { q: "Μπορώ να το χρησιμοποιώ κάθε μέρα;", a: "Ναι! Το σύστημα είναι σχεδιασμένο για καθημερινή χρήση με spaced repetition που σε κρατάει στο σωστό ρυθμό." }
-              ].map((faq, index) => (
-                <AccordionItem key={index} value={`item-${index + 1}`} className="bg-white rounded-2xl shadow-lg border-0 overflow-hidden">
-                  <AccordionTrigger className="text-left text-lg font-semibold text-[#0A1A3A] px-6 py-4 hover:bg-slate-50">
-                    {faq.q}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-slate-600 px-6 pb-4">
-                    {faq.a}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
+      {/* Stats Section */}
+      <section className="py-16 bg-slate-50">
+        <div className="container mx-auto px-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+            <div>
+              <div className="text-3xl font-bold text-slate-900 mb-2">500+</div>
+              <div className="text-slate-600">Μαθητές</div>
+            </div>
+            <div>
+              <div className="text-3xl font-bold text-slate-900 mb-2">50k+</div>
+              <div className="text-slate-600">Ασκήσεις</div>
+            </div>
+            <div>
+              <div className="text-3xl font-bold text-slate-900 mb-2">85%</div>
+              <div className="text-slate-600">Βελτίωση βαθμού</div>
+            </div>
+            <div>
+              <div className="text-3xl font-bold text-slate-900 mb-2">24/7</div>
+              <div className="text-slate-600">AI Feedback</div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Founder Bio Section */}
-      <section className="py-20 bg-slate-50">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-4xl md:text-5xl font-bold text-[#0A1A3A] mb-8">Η Ιστορία του MaxMath</h2>
-            <p className="text-xl text-slate-600 leading-relaxed">
-              MaxMath δημιουργήθηκε από φοιτητή Μαθηματικού τμήματος, που ήθελε να φτιάξει το εργαλείο που θα ήθελε να είχε όταν διάβαζε για τις Πανελλήνιες.
+      {/* How It Works */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-4">
+              Τρία βήματα στην επιτυχία
+            </h2>
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+              Απλό, έξυπνο, αποτελεσματικό. Δες πώς η AI σε οδηγεί στο 20.
             </p>
           </div>
+
+          <div className="grid lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <Card className="border-2 border-slate-100 hover:border-blue-200 transition-colors">
+              <CardContent className="p-8 text-center">
+                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <Target className="w-8 h-8 text-blue-600" />
+                </div>
+                <h3 className="text-xl font-semibold text-slate-900 mb-3">1. Διάγνωση</h3>
+                <p className="text-slate-600">
+                  10 λεπτά test. Μαθαίνουμε τι ξέρεις και τι όχι.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-2 border-slate-100 hover:border-blue-200 transition-colors">
+              <CardContent className="p-8 text-center">
+                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <Zap className="w-8 h-8 text-green-600" />
+                </div>
+                <h3 className="text-xl font-semibold text-slate-900 mb-3">2. Εξάσκηση</h3>
+                <p className="text-slate-600">
+                  Η AI σου δίνει μόνο τις ασκήσεις που χρειάζεσαι.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-2 border-slate-100 hover:border-blue-200 transition-colors">
+              <CardContent className="p-8 text-center">
+                <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <Award className="w-8 h-8 text-purple-600" />
+                </div>
+                <h3 className="text-xl font-semibold text-slate-900 mb-3">3. Επιτυχία</h3>
+                <p className="text-slate-600">
+                  Βλέπεις την πρόοδό σου. Κερδίζεις αυτοπεποίθηση.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </section>
 
-      {/* Final CTA Section */}
-      <section className="bg-gradient-to-r from-orange-500 to-red-500 py-20">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-8">
-            Θες να πας για 19+ στα Μαθηματικά; Ξεκίνα από εδώ.
+      {/* Benefits */}
+      <section className="py-20 bg-slate-50">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-4">
+              Φτιαγμένο για μαθητές. Υποστηριζόμενο από AI.
+            </h2>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+            <div>
+              <div className="space-y-6">
+                <div className="flex items-start space-x-4">
+                  <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                    <Check className="w-4 h-4 text-blue-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-slate-900 mb-1">Χωρίς άχρηστη θεωρία</h3>
+                    <p className="text-slate-600">Μαθαίνεις κάνοντας, όχι διαβάζοντας βαρετά κείμενα.</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start space-x-4">
+                  <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                    <Check className="w-4 h-4 text-green-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-slate-900 mb-1">Adaptive AI</h3>
+                    <p className="text-slate-600">Προσαρμόζεται στο επίπεδό σου και την ταχύτητά σου.</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start space-x-4">
+                  <div className="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                    <Check className="w-4 h-4 text-purple-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-slate-900 mb-1">Spaced Repetition</h3>
+                    <p className="text-slate-600">Επαναλαμβάνεις ό,τι χρειάζεσαι τη σωστή στιγμή.</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start space-x-4">
+                  <div className="w-6 h-6 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                    <Check className="w-4 h-4 text-orange-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-slate-900 mb-1">Designed για Πανελλήνιες</h3>
+                    <p className="text-slate-600">Κάθε άσκηση στοχεύει στην επιτυχία σου στις εξετάσεις.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="lg:text-right">
+              <div className="bg-white p-8 rounded-lg shadow-lg border">
+                <div className="text-center">
+                  <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Play className="w-10 h-10 text-blue-600" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-slate-900 mb-2">Δες το σε δράση</h3>
+                  <p className="text-slate-600 mb-4">2-λεπτο demo του MaxMath</p>
+                  <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+                    Παίξε Video
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-4">
+              Παίρνεις τον βαθμό. Ξεπερνάς τον μέσο όρο.
+            </h2>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <Card className="border border-slate-200">
+              <CardContent className="p-6">
+                <div className="flex items-center mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
+                  ))}
+                </div>
+                <p className="text-slate-700 mb-4">
+                  "Μέσα σε 15 λεπτά κατάλαβα Πιθανότητες που δεν κατάλαβα όλο το χρόνο."
+                </p>
+                <div className="flex items-center">
+                  <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-semibold mr-3">
+                    M
+                  </div>
+                  <div>
+                    <div className="font-medium text-slate-900">Μαρία Κ.</div>
+                    <div className="text-sm text-slate-500">Γ' Λυκείου</div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="border border-slate-200">
+              <CardContent className="p-6">
+                <div className="flex items-center mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
+                  ))}
+                </div>
+                <p className="text-slate-700 mb-4">
+                  "Ένιωσα για πρώτη φορά ότι προοδεύω στα Μαθηματικά."
+                </p>
+                <div className="flex items-center">
+                  <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center text-green-600 font-semibold mr-3">
+                    Ν
+                  </div>
+                  <div>
+                    <div className="font-medium text-slate-900">Νίκος Π.</div>
+                    <div className="text-sm text-slate-500">Γ' Λυκείου</div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Preview */}
+      <section className="py-20 bg-slate-50">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-4">
+              Ξεκίνα δωρεάν. Συνέχισε με επιτυχία.
+            </h2>
+            <p className="text-lg text-slate-600">
+              Early Access χωρίς κόστος για τους πρώτους 100 μαθητές.
+            </p>
+          </div>
+
+          <div className="max-w-2xl mx-auto">
+            <Card className="border-2 border-blue-200 bg-white">
+              <CardContent className="p-8 text-center">
+                <Badge className="bg-blue-100 text-blue-800 border-blue-200 mb-4">
+                  Προσφορά Λανσαρίσματος
+                </Badge>
+                <h3 className="text-2xl font-bold text-slate-900 mb-2">Early Access</h3>
+                <div className="text-4xl font-bold text-slate-900 mb-4">
+                  Δωρεάν
+                  <span className="text-lg text-slate-500 line-through ml-2">€29/μήνα</span>
+                </div>
+                <p className="text-slate-600 mb-6">
+                  Πλήρης πρόσβαση στην πλατφόρμα για τους πρώτους 6 μήνες.
+                </p>
+                <div className="space-y-3 mb-6 text-left">
+                  <div className="flex items-center">
+                    <Check className="w-5 h-5 text-green-500 mr-3" />
+                    <span className="text-slate-700">Unlimited ασκήσεις</span>
+                  </div>
+                  <div className="flex items-center">
+                    <Check className="w-5 h-5 text-green-500 mr-3" />
+                    <span className="text-slate-700">AI feedback σε real-time</span>
+                  </div>
+                  <div className="flex items-center">
+                    <Check className="w-5 h-5 text-green-500 mr-3" />
+                    <span className="text-slate-700">Progress tracking</span>
+                  </div>
+                  <div className="flex items-center">
+                    <Check className="w-5 h-5 text-green-500 mr-3" />
+                    <span className="text-slate-700">24/7 υποστήριξη</span>
+                  </div>
+                </div>
+                <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
+                  Εγγραφή στη Λίστα Αναμονής
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="py-16 bg-blue-600">
+        <div className="container mx-auto px-6 text-center">
+          <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
+            Έτοιμος για το 20 στα Μαθηματικά;
           </h2>
-          <Button size="lg" className="bg-white text-orange-600 hover:bg-gray-100 px-10 py-6 text-xl font-semibold rounded-full transform hover:scale-105 transition-all duration-300 shadow-xl">
-            Στείλε μου ασκήσεις – είμαι μέσα!
+          <p className="text-xl text-blue-100 mb-8">
+            Μπες στη λίστα αναμονής και ξεκίνα δωρεάν.
+          </p>
+          <Button size="lg" className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-4 text-lg font-semibold">
+            Ξεκίνα Τώρα
           </Button>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-[#0A1A3A] py-12">
-        <div className="container mx-auto px-4 text-center">
-          <div className="text-white text-2xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent">
-            MaxMath
+      <footer className="bg-slate-900 py-12">
+        <div className="container mx-auto px-6">
+          <div className="grid lg:grid-cols-4 gap-8 mb-8">
+            <div>
+              <div className="text-xl font-bold text-white mb-4">MaxMath</div>
+              <p className="text-slate-400">
+                Η πρώτη AI πλατφόρμα για Μαθηματικά Πανελληνίων.
+              </p>
+            </div>
+            <div>
+              <h4 className="font-semibold text-white mb-4">Πλατφόρμα</h4>
+              <ul className="space-y-2 text-slate-400">
+                <li>Πώς λειτουργεί</li>
+                <li>Τιμές</li>
+                <li>FAQ</li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold text-white mb-4">Εταιρεία</h4>
+              <ul className="space-y-2 text-slate-400">
+                <li>Σχετικά</li>
+                <li>Blog</li>
+                <li>Επικοινωνία</li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold text-white mb-4">Υποστήριξη</h4>
+              <ul className="space-y-2 text-slate-400">
+                <li>Βοήθεια</li>
+                <li>Κοινότητα</li>
+                <li>Feedback</li>
+              </ul>
+            </div>
           </div>
-          <p className="text-blue-200 mb-4">Μαθηματικά Πανελληνίων με AI</p>
-          <p className="text-blue-300 text-sm">
-            Made in Greece 🇬🇷 with ❤️ by future math nerds.
-          </p>
+          
+          <div className="border-t border-slate-800 pt-8 text-center">
+            <p className="text-slate-400">
+              Made in Greece 🇬🇷 with ❤️ by future math nerds.
+            </p>
+            <p className="text-slate-500 text-sm mt-2">
+              Σχεδιασμένο από εκπαιδευτικούς & AI engineers στην Ελλάδα.
+            </p>
+          </div>
         </div>
       </footer>
     </div>
