@@ -139,9 +139,15 @@ const Index = () => {
         </div>
 
         {/* Floating Elements */}
-        <FloatingElement delay={0} className="absolute top-20 left-20 w-16 h-16 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-xl" />
-        <FloatingElement delay={2} className="absolute top-40 right-32 w-12 h-12 bg-gradient-to-br from-teal-400/20 to-green-400/20 rounded-full blur-xl" />
-        <FloatingElement delay={4} className="absolute bottom-32 left-1/4 w-20 h-20 bg-gradient-to-br from-purple-400/20 to-pink-400/20 rounded-full blur-xl" />
+        <FloatingElement delay={0} className="absolute top-20 left-20 w-16 h-16 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-xl">
+          <div />
+        </FloatingElement>
+        <FloatingElement delay={2} className="absolute top-40 right-32 w-12 h-12 bg-gradient-to-br from-teal-400/20 to-green-400/20 rounded-full blur-xl">
+          <div />
+        </FloatingElement>
+        <FloatingElement delay={4} className="absolute bottom-32 left-1/4 w-20 h-20 bg-gradient-to-br from-purple-400/20 to-pink-400/20 rounded-full blur-xl">
+          <div />
+        </FloatingElement>
       </section>
 
       {/* Stats Section with staggered animations */}
@@ -583,7 +589,8 @@ const Index = () => {
       </footer>
 
       {/* Custom CSS for animations */}
-      <style jsx>{`
+      <style>
+        {`
         @keyframes float {
           0%, 100% { transform: translateY(0px); }
           50% { transform: translateY(-20px); }
@@ -638,7 +645,8 @@ const Index = () => {
             transform: translateX(0);
           }
         }
-      `}</style>
+        `}
+      </style>
     </div>
   );
 };
