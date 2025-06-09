@@ -8,6 +8,7 @@ const SmartSpotsLeftNotification: React.FC<SmartSpotsLeftNotificationProps> = ({
   return (
     <>
       <div
+        className="notification-bubble"
         style={{
           position: 'fixed',
           bottom: 32,
@@ -54,6 +55,25 @@ const SmartSpotsLeftNotification: React.FC<SmartSpotsLeftNotificationProps> = ({
           0% { transform: scale(0.7); opacity: 0; }
           60% { transform: scale(1.1); opacity: 1; }
           100% { transform: scale(1); }
+        }
+        @media (max-width: 767px) {
+          .notification-bubble {
+            display: none;
+          }
+        }
+        @media (max-width: 480px) {
+          .notification-bubble {
+            padding: 12px 20px;
+            font-size: 0.9rem;
+          }
+          .notification-bubble span:last-child {
+            font-size: 0.9rem;
+          }
+          .notification-bubble span:nth-child(2) {
+            width: 36px;
+            height: 36px;
+            font-size: 1.1rem;
+          }
         }
       `}</style>
     </>
