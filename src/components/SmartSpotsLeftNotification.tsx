@@ -46,9 +46,6 @@ const SmartSpotsLeftNotification: React.FC<SmartSpotsLeftNotificationProps> = ({
           justifyContent: 'center',
           boxShadow: '0 2px 8px 0 rgba(255, 152, 0, 0.15)',
         }}>{spotsLeft}</span>
-        <span>
-          <b>Απομένουν μόνο {spotsLeft} θέσεις!</b>
-        </span>
       </div>
       <style>{`
         @keyframes bounceIn {

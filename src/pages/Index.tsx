@@ -5,7 +5,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import LogoScroll from "@/components/LogoScroll";
 import TypingEffectTitle from '../components/TypingEffectTitle';
-import SmartSpotsLeftNotification from '../components/SmartSpotsLeftNotification';
 
 const formHtml = `
 <script src="https://f.convertkit.com/ckjs/ck.5.js"></script>
@@ -59,7 +58,6 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-white relative overflow-hidden">
-      <SmartSpotsLeftNotification spotsLeft={remainingSlots} />
       {/* Animated Background Elements */}
       <div className="fixed inset-0 pointer-events-none">
         <div 
