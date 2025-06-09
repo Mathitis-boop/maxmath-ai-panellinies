@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import LogoScroll from "@/components/LogoScroll";
 import TypingEffectTitle from '../components/TypingEffectTitle';
+import SmartSpotsLeftNotification from '../components/SmartSpotsLeftNotification';
 
 const formHtml = `
 <script src="https://f.convertkit.com/ckjs/ck.5.js"></script>
@@ -58,6 +59,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-white relative overflow-hidden">
+      <SmartSpotsLeftNotification spotsLeft={remainingSlots} />
       {/* Animated Background Elements */}
       <div className="fixed inset-0 pointer-events-none">
         <div 
@@ -333,9 +335,9 @@ const Index = () => {
             <div className="relative animate-[fadeInRight_1s_ease-out_0.4s_both]">
               <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-teal-500/10 rounded-3xl transform rotate-3 animate-[float_6s_ease-in-out_infinite]" />
               <div className="relative bg-white shadow-2xl border-0 transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all duration-500 group overflow-hidden p-8 text-center">
-                <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors duration-300">
+                    <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors duration-300">
                   Κλείστε Παρουσίαση
-                </h3>
+                    </h3>
                 <p className="text-gray-600 mb-6 text-lg">Κλείστε ένα ραντεβού για να δείτε πώς λειτουργεί η πλατφόρμα!</p>
                 <a
                   href="#waitlist-widget"
@@ -350,7 +352,7 @@ const Index = () => {
                 >
                   Κλείστε Ραντεβού στη Φόρμα
                 </a>
-              </div>
+                  </div>
             </div>
           </div>
         </div>
