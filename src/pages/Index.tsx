@@ -212,7 +212,7 @@ const Index = () => {
               {
                 step: "01",
                 title: "Ανάλυση Επιπέδου",
-                description: "Έξυπνο τεστ 5 λεπτών που εντοπίζει τα κενά σας",
+                description: "Έξυπνο τεστ που εντοπίζει τα κενά σας",
                 icon: Target,
                 color: "from-blue-500 to-blue-600",
                 delay: 0.3
