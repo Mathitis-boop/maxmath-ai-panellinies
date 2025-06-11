@@ -1,73 +1,75 @@
-# Welcome to your Lovable project
+# MaxMath – Μαθηματικά Πανελληνίων με AI
 
-## Project info
+Η πρώτη AI πλατφόρμα εξάσκησης για τις Πανελλήνιες. Χωρίς θεωρία – μόνο στοχευμένη πράξη με άμεσο feedback.
 
-**URL**: https://lovable.dev/projects/89ccc179-025a-4b7d-aa6d-5b58cb34dff1
+**URL**: https://maxmath.gr
 
-## How can I edit this code?
+## Development
 
-There are several ways of editing your application.
+### Local Development
 
-**Use Lovable**
+1. Install dependencies:
+```bash
+npm install
+```
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/89ccc179-025a-4b7d-aa6d-5b58cb34dff1) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+2. Start the development server:
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+3. Open your browser and navigate to `http://localhost:8080`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Building for Production
 
-**Use GitHub Codespaces**
+```bash
+npm run build
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Linting
 
-## What technologies are used for this project?
+```bash
+npm run lint
+```
 
-This project is built with:
+## Deployment
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+This project is deployed on Vercel with automatic deployment from the `main` branch.
 
-## How can I deploy this project?
+## Technologies Used
 
-Simply open [Lovable](https://lovable.dev/projects/89ccc179-025a-4b7d-aa6d-5b58cb34dff1) and click on Share -> Publish.
+- **React 18** with TypeScript
+- **Vite** for build tooling
+- **Tailwind CSS** for styling
+- **Framer Motion** for animations
+- **ConvertKit** for email collection
 
-## Can I connect a custom domain to my Lovable project?
+## Project Structure
 
-Yes, you can!
+```
+src/
+├── components/        # Reusable UI components
+├── pages/            # Page components
+├── lib/              # Utility functions
+└── main.tsx          # Application entry point
+```
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## Features
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+- 🇬🇷 **Greek Language Support** - Fully localized for Greek students
+- 🤖 **AI-Powered Practice** - Intelligent problem generation and feedback
+- 📱 **Responsive Design** - Works on desktop, tablet, and mobile
+- ✨ **Modern UI** - Clean, animated interface with Framer Motion
+- 📧 **Waitlist Integration** - ConvertKit-powered email collection
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+All rights reserved - MaxMath Platform
