@@ -103,7 +103,10 @@ if __name__ == "__main__":
             print("✅ Σωστό!" if is_correct else "❌ Λάθος.")
 
             resp_r = supabase.table("user_chapter_ratings").select("current_rating").eq("user_id", user_id).eq("chapter_id", ex["chapter_id"]).maybe_single().execute()
-            old_rating = resp_r.data.get('current_rating', 1000) if resp_r.data else 1000
+            if not resp_r or resp_r.data is None:
+                old_rating = 1000
+            else:
+                old_rating = resp_r.data.get("current_rating", 1000)
 
             new_rating = update_rating(old_rating, RATING_MAP[(ex['level'], ex['difficulty'])], int(is_correct), 60, time_taken, ex['level'], ex['tag'])
             supabase.table("user_chapter_ratings").upsert({"user_id": user_id, "chapter_id": ex['chapter_id'], "current_rating": new_rating, "last_updated": datetime.utcnow().isoformat()}, on_conflict="user_id,chapter_id").execute()
