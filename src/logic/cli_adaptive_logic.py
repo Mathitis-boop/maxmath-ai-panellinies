@@ -4,52 +4,54 @@ import re
 import sys
 import random
 import uuid
-import os
 from datetime import datetime
 
 # ————————————————
-# 1) Ρύθμισέ τα δικά σου:
 SUPABASE_URL = "https://kmitoklacnjggvymdxqr.supabase.co"
 SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImttaXRva2xhY25qZ2d2eW1keHFyIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0ODk1MzE5OSwiZXhwIjoyMDY0NTI5MTk5fQ.kpbQxioHg4-wFsjZl4emI7_brvdPL4PAniwrEkakiS8"
 supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 # ————————————————
 
-# Fixed rating map (level, difficulty) → ELO rating
 RATING_MAP = {
-    ("low", 1): 800,    ("low", 2): 850,
-    ("low", 3): 900,    ("low", 4): 950,
-    ("medium", 1): 1000,("medium", 2):1050,
-    ("medium", 3):1100,("medium", 4):1150,
-    ("high", 1):1200,   ("high", 2):1250,
-    ("high", 3):1300,   ("high", 4):1350,
+    ("low", 1): 800, ("low", 2): 850, ("low", 3): 900, ("low", 4): 950,
+    ("medium", 1): 1000, ("medium", 2): 1050, ("medium", 3): 1100, ("medium", 4): 1150,
+    ("high", 1): 1200, ("high", 2): 1250, ("high", 3): 1300, ("high", 4): 1350,
 }
 
-# ELO update function
-def update_rating(student_rating: int, question_rating: int, outcome: int, K: int) -> int:
+def update_rating(student_rating: int, question_rating: int, outcome: int,
+                  K: int, time_taken: int, level: str, tag: str) -> int:
     expected = 1 / (1 + 10 ** ((question_rating - student_rating) / 400))
-    return round(student_rating + K * (outcome - expected))
+    ideal_time = {'low': 300, 'medium': 420, 'high': 900}
+    if time_taken <= ideal_time[level]:
+        time_factor = 1
+    else:
+        overtime = (time_taken - ideal_time[level]) / 60
+        time_factor = max(0.5, 1 - 0.1 * overtime)
+    tag_factor = 1
+    if tag == "basic":
+        tag_factor = 0.8 if outcome == 1 else 1.5
+    elif tag == "trap":
+        tag_factor = 1.5 if outcome == 1 else 1.0
+    elif tag == "critical":
+        tag_factor = 1.3 if outcome == 1 else 0.7
+    elo_change = K * (outcome - expected) * time_factor * tag_factor
+    return round(student_rating + elo_change)
 
-# Fetch exercise details by ID (includes chapter_id)
+# Fetch and render functions unchanged
+# Fetch exercise details by ID
+# Render question text
+# Check provided answer
+# Recommend next exercise based on ELO
+
 def fetch_exercise_by_id(ex_id: int) -> dict | None:
-    resp = (
-        supabase.table("exercises")
-        .select("id, question, answer, difficulty, level, unit, category, chapter_id")
-        .eq("id", ex_id)
-        .maybe_single()
-        .execute()
-    )
+    resp = supabase.table("exercises").select("*").eq("id", ex_id).maybe_single().execute()
     return resp.data
 
-# Render the question text with matplotlib
 def render_question_plot(q_raw: str):
-    if not q_raw:
-        print("Η ερώτηση είναι κενή.")
-        return
     match = re.search(r"\\", q_raw)
     if match:
-        i = match.start()
-        greek_part = q_raw[:i].strip()
-        math_part = q_raw[i:]
+        greek_part = q_raw[:match.start()].strip()
+        math_part = q_raw[match.start():]
         text_to_plot = f"{greek_part}\n${math_part}$"
     else:
         text_to_plot = q_raw
@@ -58,137 +60,54 @@ def render_question_plot(q_raw: str):
     plt.axis("off")
     plt.show()
 
-# Check if the provided answer is correct
 def check_answer(exercise_id: int, user_input: str) -> bool:
-    resp = (
-        supabase.table("exercises")
-        .select("answer")
-        .eq("id", exercise_id)
-        .single()
-        .execute()
-    )
-    correct = resp.data.get("answer", "").strip().lower()
-    return user_input.strip().lower() == correct
+    resp = supabase.table("exercises").select("answer").eq("id", exercise_id).single().execute()
+    return user_input.strip().lower() == resp.data.get("answer", "").strip().lower()
 
-# Recommend next exercise based on student's ELO rating and same chapter
 def recommend_next(current_ex: dict, user_id: str) -> int | None:
     chapter_id = current_ex["chapter_id"]
-    # fetch student's chapter ELO
-    resp_r = (
-        supabase.table("user_chapter_ratings")
-        .select("current_rating")
-        .eq("user_id", user_id)
-        .eq("chapter_id", chapter_id)
-        .single()
-        .execute()
-    )
-    student_rating = resp_r.data.get("current_rating", 1000) if resp_r.data else 1000
+    resp_r = supabase.table("user_chapter_ratings").select("current_rating").eq("user_id", user_id).eq("chapter_id", chapter_id).single().execute()
+    student_rating = resp_r.data.get("current_rating", 1000)
     low, high = student_rating - 100, student_rating + 100
-    # fetch exercises in same chapter
-    resp = (
-        supabase.table("exercises")
-        .select("id, difficulty, level, chapter_id")
-        .eq("chapter_id", chapter_id)
-        .execute()
-    )
-    candidates = [q["id"] for q in resp.data
-                  if low <= RATING_MAP[(q["level"], q["difficulty"]) ]<= high]
-    if not candidates:
-        low, high = student_rating - 200, student_rating + 200
-        candidates = [q["id"] for q in resp.data
-                      if low <= RATING_MAP[(q["level"], q["difficulty"]) ]<= high]
+    resp = supabase.table("exercises").select("*").eq("chapter_id", chapter_id).execute()
+    candidates = [q["id"] for q in resp.data if low <= RATING_MAP[(q["level"], q["difficulty"])] <= high]
     return random.choice(candidates) if candidates else None
 
-# Main CLI loop
 if __name__ == "__main__":
-    print("=== CLI Ασκήσεων με Adaptive ELO Difficulty ανά Κεφάλαιο ===\n")
-
-    # Δημιουργία νέου μαθητή με username
     random_username = f"student_{uuid.uuid4().hex[:8]}"
-    resp = (
-        supabase.table("profiles")
-        .insert({"username": random_username}, returning="representation")
-        .execute()
-    )
-    user = resp.data[0] if isinstance(resp.data, list) else resp.data
+    user = supabase.table("profiles").insert({"username": random_username}, returning="representation").execute().data[0]
     user_id = user["id"]
-    # Initial profile rating no longer used
-    print(f"Δημιουργήθηκε νέος μαθητής με ID = {user_id}, username = '{random_username}'\n")
 
     next_ex_id = None
     try:
         while True:
-            # Επιλογή άσκησης
             if next_ex_id is None:
                 inp = input("Δώσε το ID της άσκησης (ή 'exit'): ").strip()
                 if inp.lower() == "exit": break
-                try:
-                    ex_id = int(inp)
-                except ValueError:
-                    print("Μη έγκυρη τιμή.")
-                    continue
+                ex_id = int(inp)
             else:
                 ex_id = next_ex_id
-                print(f"\n▶️  Επόμενη άσκηση ID = {ex_id}\n")
 
             ex = fetch_exercise_by_id(ex_id)
             if not ex:
-                print(f"Δεν βρέθηκε άσκηση με ID = {ex_id}.")
                 next_ex_id = None
                 continue
 
-            print(f"Άσκηση #{ex['id']} | Κεφάλαιο {ex['chapter_id']} | {ex['level']}-{ex['difficulty']}\n")
-            render_question_plot(ex.get("question",""))
-
+            render_question_plot(ex["question"])
+            start_time = datetime.now()
             ans = input("\nΔώσε την απάντησή σου (ή 'exit'): ").strip()
             if ans.lower() == "exit": break
+            time_taken = (datetime.now() - start_time).seconds
+
             is_correct = check_answer(ex_id, ans)
             print("✅ Σωστό!" if is_correct else "❌ Λάθος.")
 
-            # --- ELO per chapter ---
-            chapter_id = ex['chapter_id']
-            
-            # fetch old rating (αν υπάρχει), αλλιώς None
-            resp_r = (
-                supabase.table("user_chapter_ratings")
-                        .select("current_rating")
-                        .eq("user_id", user_id)
-                        .eq("chapter_id", chapter_id)
-                        .maybe_single()
-                        .execute()
-            )
-            
-            # αν δεν βρέθηκε εγγραφή, default 1000
-            if resp_r is None:
-                old_rating = 1000
-            else:
-                old_rating = resp_r.data['current_rating']
-            
-            # Υπολογισμός νέου rating
-            question_rating = RATING_MAP[(ex['level'], ex['difficulty'])]
-            K = 60
-            new_rating = update_rating(old_rating, question_rating, int(is_correct), K)
-            
-            # upsert νέου rating
-            supabase.table("user_chapter_ratings") \
-                .upsert(
-                    {
-                      "user_id": user_id,
-                      "chapter_id": chapter_id,
-                      "current_rating": new_rating,
-                      "last_updated": datetime.utcnow().isoformat()
-                    },
-                    on_conflict="user_id,chapter_id"
-                ).execute()
+            resp_r = supabase.table("user_chapter_ratings").select("current_rating").eq("user_id", user_id).eq("chapter_id", ex["chapter_id"]).maybe_single().execute()
+            old_rating = resp_r.data.get('current_rating', 1000) if resp_r.data else 1000
 
-            print(f"🔄 ELO στο κεφάλαιο {chapter_id}: {old_rating} → {new_rating}")
+            new_rating = update_rating(old_rating, RATING_MAP[(ex['level'], ex['difficulty'])], int(is_correct), 60, time_taken, ex['level'], ex['tag'])
+            supabase.table("user_chapter_ratings").upsert({"user_id": user_id, "chapter_id": ex['chapter_id'], "current_rating": new_rating, "last_updated": datetime.utcnow().isoformat()}, on_conflict="user_id,chapter_id").execute()
 
-            # propose next
             next_ex_id = recommend_next(ex, user_id)
-            if not next_ex_id:
-                print("⚠️ Δεν βρέθηκε επόμενη άσκηση στο κεφάλαιο.")
-                next_ex_id = None
-            print("\n---\n")
     except KeyboardInterrupt:
-        print("\nΤέλος.")
         sys.exit(0)
